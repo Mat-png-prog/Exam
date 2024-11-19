@@ -1,0 +1,19 @@
+/* src/app/(main)/app.module.css*/
+
+/*Navbar*/
+/* Adjust icon size */
+.icon {
+  font-size: 4vh;
+}
+
+/* Adjust navbar height */
+.navbar {
+  height: 10vh;
+}
+
+/* Adjust dropdown menu width */
+.dropdown-menu {
+  width: 30vw;
+}
+
+/*layout*/

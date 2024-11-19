@@ -1,0 +1,61 @@
+//prisma/schema.prisma
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  username      String    @unique
+  firstName     String
+  lastName      String
+  displayName   String
+  email         String    @unique
+  passwordHash  String
+  vatNumber     String
+  phoneNumber   Int
+  streetAddress String
+  addressLine2  String?
+  suburb        String
+  townCity      String
+  postcode      String
+  country       String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  books         Book[]
+  Session       Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Book {
+  id          String   @id @default(uuid())
+  title       String
+  author      String
+  publishYear Int
+  price       Float
+  available   Boolean  @default(false)
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("books")
+}

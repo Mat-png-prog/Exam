@@ -1,0 +1,25 @@
+/* HeartIcon.module.css */
+
+.heartIconContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.heartIcon {
+  cursor: pointer;
+  fill: var(--heart-fill, #ff0000); /* default color red */
+  transition: fill 0.2s ease-in-out, transform 0.2s ease-in-out;
+  width: 64px;
+  height: 64px;
+}
+
+.heartIcon.isFilled {
+  --heart-fill: #ffffff; /* white color when filled */
+}
+
+@media (min-width: 768px) {
+  .heartIcon {
+    transform: scale(1.5);
+  }
+}
