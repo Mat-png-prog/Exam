@@ -1,3 +1,4 @@
+// src/app/(main)/books/[id]/delete/ClientDeleteBook.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -13,8 +14,13 @@ export default function ClientDeleteBook({ id }: { id: string }) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      await deleteBookAction(id);
-      router.push('/books'); // Redirect to the books page after deletion
+      const result = await deleteBookAction(id);
+      if (result.success) {
+        router.push('/books');
+        router.refresh();
+      } else {
+        setError(result.error || 'Failed to delete book');
+      }
     } catch (error: any) {
       console.error('Error deleting book:', error);
       setError(`Unable to delete book. ${error.message}`);
@@ -27,7 +33,11 @@ export default function ClientDeleteBook({ id }: { id: string }) {
     <div>
       {error && <p className="text-red-600">{error}</p>}
       <div className="mt-4">
-        <Button onClick={handleDelete} disabled={isDeleting} className="hover:bg-yellow-400 hover:text-black text-red-500">
+        <Button 
+          onClick={handleDelete} 
+          disabled={isDeleting} 
+          className="hover:bg-yellow-400 hover:text-black text-red-500"
+        >
           {isDeleting ? 'Deleting...' : 'Confirm Delete'}
         </Button>
       </div>

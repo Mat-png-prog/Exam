@@ -26,7 +26,7 @@ export async function updateBookAction(id: string, formData: FormData) {
     description: formData.get('description') as string,
     publishYear: parseInt(formData.get('publishYear') as string),
     price: parseFloat(formData.get('price') as string),
-    available: formData.get('available') as unknown as boolean
+    available: Boolean(formData.get('available'))
   };
 
   await prisma.book.update({
@@ -34,6 +34,6 @@ export async function updateBookAction(id: string, formData: FormData) {
     data: values,
   });
 
-  revalidatePath("/book");
-  redirect("/book");
+  revalidatePath("/books");
+  redirect("/books");
 }
