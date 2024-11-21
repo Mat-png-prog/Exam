@@ -35,3 +35,5 @@ plugins: ["prettier-plugin-tailwindcss"]
 #### npx shadcn@latest init
 
 ### npx shadcn@latest add button dropdown-menu form input label table textarea2 --legacy-peer-deps
+
+### npm i react@latest react-dom@latest @floating-ui/react-dom@latest @radix-ui/react-popper@latest react-hook-form@latest  --legacy-peer-deps
