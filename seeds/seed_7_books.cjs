@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  const userId = 'pldat7jwkb25ojda'; // Replace with a valid user ID
+  const userId = '7 books'; // Replace with a valid user ID
 
   const books = Array.from({ length: 7 }).map((_, i) => ({
     title: `Book Title ${i + 1}`,
