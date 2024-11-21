@@ -39,7 +39,7 @@ export default function BookSearch() {
       <div className="relative flex-1">
         <Input
           type="text"
-          placeholder="Search books by title, author, price or pusblish year"
+          placeholder="Search books by title, author, price or publish year"
           value={searchTerm}
           onChange={handleSearchChange}
           className="pl-10 w-full"
