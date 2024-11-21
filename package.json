@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "npm run clean && next lint",
     "unin-node_mod": "rmdir /s /q node_modules",
+    "del-lock": "del package-lock.json",
     "del-node-mode&lock": "rmdir /s /q node_modules && rmdir /s /q  package-lock.json",
     "legacy": "npm install --legacy-peer-deps",
     "push": "npx prisma db push",
