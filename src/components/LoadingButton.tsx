@@ -17,7 +17,7 @@ export default function LoadingButton({
   return (
     <Button
       disabled={loading || disabled}
-      className={cn("flex items-center gap-2 hover: bg-slate-200 on", className)}
+      className={cn("flex items-center gap-2 hover: bg-slate-800 on", className)}
       {...props}
     >
       {loading && <Loader2 className="size-5 animate-spin" />}

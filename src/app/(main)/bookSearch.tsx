@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+/* import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -59,4 +59,38 @@ const BookSearch = () => {
   );
 };
 
-export default BookSearch;
+export default BookSearch; */
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { useDebounce } from 'use-debounce';
+
+export default function BookSearch() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('query') || '');
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (debouncedSearchTerm) {
+      params.set('query', debouncedSearchTerm);
+      params.delete('page'); // Reset to first page when searching
+    } else {
+      params.delete('query');
+    }
+    router.replace(`${pathname}?${params.toString()}`);
+  }, [debouncedSearchTerm, pathname, router, searchParams]);
+
+  return (
+    <Input
+      className="max-w-sm"
+      placeholder="Search books by title or author..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+  );
+}

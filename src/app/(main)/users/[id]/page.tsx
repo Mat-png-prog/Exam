@@ -1,13 +1,8 @@
-'use client';
-
+// src/app/(main)/users/[id]/page.tsx
 import UserProfilePage from './UserProfilePage';
 
-const ProfilePage = ({ params }: { params: { id: string } }) => {
-  return (
-    <div>
-      <UserProfilePage params={params} />
-    </div>
-  );
-};
-
-export default ProfilePage;
+export default function ProfilePage({ params }
+  :
+  { params: { id: string } }) {
+  return <UserProfilePage params={params} />;
+}

@@ -1,5 +1,6 @@
+//src/app/(main)/page.tsx
 import { PrismaClient, Book, Prisma } from '@prisma/client';
-import BookSearch from '@/components/BookSearch';
+import BookSearch from './ClientSearch';
 import ClientBooksTable from './ClientBooksTable';
 
 const prisma = new PrismaClient();
@@ -13,8 +14,20 @@ async function fetchBooks(
     OR: [
       { title: { contains: searchQuery, mode: 'insensitive' as Prisma.QueryMode } },
       { author: { contains: searchQuery, mode: 'insensitive' as Prisma.QueryMode } },
-     /*  { isbn: { contains: searchQuery, mode: 'insensitive' as Prisma.QueryMode } }, */
-    ],
+       {publishYear: { 
+        equals: searchQuery ? parseInt(searchQuery) : undefined 
+      } 
+    },
+    // Note: For price, you'll likely want to use specific numeric comparisons
+    { 
+      price: searchQuery 
+        ? { 
+            gte: parseFloat(searchQuery), 
+            lte: parseFloat(searchQuery) 
+          } 
+        : undefined 
+    }
+  ].filter(Boolean) // Remove 
   } : {};
 
   const books = await prisma.book.findMany({

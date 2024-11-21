@@ -1,3 +1,4 @@
+// src/app/(main)/users/types.ts
 export type UserData = {
   id: string;
   username: string;

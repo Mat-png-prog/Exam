@@ -21,13 +21,25 @@ export default async function BooksPage({
 
   const where: Prisma.BookWhereInput = {
     userId: user.id,
-    OR: searchParams.search
-      ? [
-          { title: { contains: searchParams.search, mode: Prisma.QueryMode.insensitive } },
-          { author: { contains: searchParams.search, mode: Prisma.QueryMode.insensitive } },
-          { description: { contains: searchParams.search, mode: Prisma.QueryMode.insensitive } },
-        ]
-      : undefined,
+    ...(searchParams.search && {
+      OR: [
+        { title: { contains: searchParams.search, mode: Prisma.QueryMode.insensitive } },
+        { author: { contains: searchParams.search, mode: Prisma.QueryMode.insensitive } },
+        { 
+          publishYear: { 
+            equals: searchParams.search ? parseInt(searchParams.search) : undefined 
+          } 
+        },
+        { 
+          price: searchParams.search 
+            ? { 
+                gte: parseFloat(searchParams.search), 
+                lte: parseFloat(searchParams.search) 
+              } 
+            : undefined 
+        }
+      ].filter(Boolean)
+    })
   };
 
   const [books, total] = await Promise.all([
