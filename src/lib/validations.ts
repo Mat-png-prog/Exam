@@ -70,7 +70,7 @@ export const updateProfileSchema = z.object({
   username: requiredString
     .min(1, "Username must be at least 5 characters")
     .max(15, "Username can't be more than 15 charcters"),
-  password: requiredString.min(8, "Password must be 8 characters or more"),
+  passwordHash: requiredString.min(8, "Password must be 8 characters or more"),
   firstName: requiredString.max(
     57,
     "First name cannot be more than 57 charcters",

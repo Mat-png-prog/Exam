@@ -1,69 +1,4 @@
-// src/app/(main)/users/[id]/UserProfileForm.tsx
-/* 'use client';
-
-import { useTransition } from 'react';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
-import { UserData } from '../types';
-
-type UserProfileFormProps = {
-  userData: UserData;
-  updateUserProfile: (formData: FormData) => Promise<{ success: boolean; message: string }>;
-};
-
-export default function UserProfileForm({ userData, updateUserProfile }: UserProfileFormProps) {
-  const [isPending, startTransition] = useTransition();
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    
-    startTransition(async () => {
-      const formData = new FormData(event.currentTarget);
-      formData.append('id', userData.id);
-      
-      const result = await updateUserProfile(formData);
-      
-      if (result.success) {
-        toast({
-          title: "Success",
-          description: result.message,
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: result.message,
-          variant: "destructive",
-        });
-      }
-    });
-  };
-
-  return (
-    <Card className="max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle>Account Settings</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form action={updateUserProfile} className="space-y-6">
- 
-          <CardFooter className="px-0 pb-0">
-            <Button 
-              type="submit" 
-              disabled={isPending}
-              className="w-full"
-            >
-              {isPending ? 'Updating...' : 'Update Profile'}
-            </Button>
-          </CardFooter>
-        </form>
-      </CardContent>
-    </Card>
-  );
-} */
-
+//src/app/(main)/users/[id]/UserProfileForm.tsx
 'use client';
 
 import { useTransition } from 'react';
@@ -84,52 +19,48 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    
-    startTransition(async () => {
-      const formData = new FormData(event.currentTarget);
-      
-      const userProfileData: UpdateProfileValues = {
-        id: userData.id,
-        username: formData.get('username') as string,
-        firstName: formData.get('firstName') as string,
-        lastName: formData.get('lastName') as string,
-        email: formData.get('email') as string,
-        phoneNumber: Number(formData.get('phoneNumber')),
-        vatNumber: formData.get('vatNumber') as string,
-        streetAddress: formData.get('streetAddress') as string,
-        addressLine2: formData.get('addressLine2') as string,
-        suburb: formData.get('suburb') as string,
-        townCity: formData.get('townCity') as string,
-        postcode: formData.get('postcode') as string,
-        country: formData.get('country') as string,
-        password: formData.get('password') as string ,
-      };
-      
-      try {
-        const result = await updateUserProfile(userData.id, userProfileData);
-        
-        if (result.success) {
-          toast({
-            title: "Success",
-            description: result.message,
-          });
-        } else {
-          toast({
-            title: "Error",
-            description: result.message,
-            variant: "destructive",
-          });
-        }
-      } catch (error) {
+  event.preventDefault();
+  startTransition(async () => {
+    const formData = new FormData(event.currentTarget);
+    const userProfileData: UpdateProfileValues = {
+      id: userData.id,
+      username: formData.get('username') as string,
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      email: formData.get('email') as string,
+      phoneNumber: Number(formData.get('phoneNumber')),
+      vatNumber: formData.get('vatNumber') as string,
+      streetAddress: formData.get('streetAddress') as string,
+      addressLine2: formData.get('addressLine2') as string,
+      suburb: formData.get('suburb') as string,
+      townCity: formData.get('townCity') as string,
+      postcode: formData.get('postcode') as string,
+      country: formData.get('country') as string,
+      passwordHash: formData.get('passwordHash') as string || '', // Add default value for password
+    };
+    try {
+      const result = await updateUserProfile(userData.id, userProfileData);
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: result.message,
+        });
+      } else {
         toast({
           title: "Error",
-          description: "An unexpected error occurred",
+          description: result.message,
           variant: "destructive",
         });
-      }
-    });
-  };
+      };
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    };
+  });
+};
 
   return (
     <Card className="max-w-2xl mx-auto">
@@ -275,4 +206,4 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
       </CardContent>
     </Card>
   );
-}
+};

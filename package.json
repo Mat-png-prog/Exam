@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "clean": "rmdir /s /q .next",
+    "clean": "rmdir /s /q .next ",
     "cache-clean": "npm cache clean --force",
     "build": "next build",
     "start": "next start",

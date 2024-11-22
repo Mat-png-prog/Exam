@@ -1,27 +1,20 @@
-//src/components/BookSearch.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { useDebounce } from 'use-debounce';
 
-export default function BookSearch() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
+interface BookSearchProps {
+  setSearchQuery: (query: string) => void;
+}
+
+export default function BookSearch({ setSearchQuery }: BookSearchProps) {
+  const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (debouncedSearchTerm) {
-      params.set('search', debouncedSearchTerm);
-    } else {
-      params.delete('search');
-    }
-    router.replace(`${pathname}?${params.toString()}`);
-  }, [debouncedSearchTerm, pathname, router, searchParams]);
+    setSearchQuery(debouncedSearchTerm);
+  }, [debouncedSearchTerm, setSearchQuery]);
 
   return (
     <Input

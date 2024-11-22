@@ -2,7 +2,7 @@ import { validateRequest } from "../../auth";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import BookSearch from "@/components/BookSearch";
+/* import BookSearch from "@/components/BookSearch"; */
 import BookTable from "./BookTable";
 import { Prisma } from "@prisma/client";
 import ClientPagination from "./ClientPagination";
@@ -62,7 +62,7 @@ export default async function BooksPage({
           <Button><AddIcon/>Add Book</Button>
         </Link>
       </div>
-      <BookSearch />
+      {/* <BookSearch /> */}
       <BookTable books={books} />
       <ClientPagination totalPages={totalPages} currentPage={page} />
     </div>
