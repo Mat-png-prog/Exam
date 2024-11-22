@@ -1,66 +1,72 @@
-//src/app/(main)/users/[id]/UserProfileForm.tsx
+// src/app/(main)/users/[id]/UserProfileForm.tsx
 'use client';
 
-import { useTransition } from 'react';
+import React, { useTransition } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { UserData } from '../types';
-import { UpdateProfileValues } from '@/lib/validations'; // Assuming you have this type
+import { UpdateProfileValues, ApiResponse } from '../types';
 
-type UserProfileFormProps = {
-  userData: UserData;
-  updateUserProfile: (userId: string, userProfileData: UpdateProfileValues) => Promise<{ success: boolean; message: string }>;
-};
+interface UserProfileFormProps {
+  userData: UpdateProfileValues;
+  updateUserProfile: (userId: string, userProfileData: UpdateProfileValues) => Promise<ApiResponse<void>>;
+}
 
-export default function UserProfileForm({ userData, updateUserProfile }: UserProfileFormProps) {
+export default function UserProfileForm({ userData, updateUserProfile }: UserProfileFormProps): JSX.Element {
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  startTransition(async () => {
-    const formData = new FormData(event.currentTarget);
-    const userProfileData: UpdateProfileValues = {
-      id: userData.id,
-      username: formData.get('username') as string,
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
-      email: formData.get('email') as string,
-      phoneNumber: Number(formData.get('phoneNumber')),
-      vatNumber: formData.get('vatNumber') as string,
-      streetAddress: formData.get('streetAddress') as string,
-      addressLine2: formData.get('addressLine2') as string,
-      suburb: formData.get('suburb') as string,
-      townCity: formData.get('townCity') as string,
-      postcode: formData.get('postcode') as string,
-      country: formData.get('country') as string,
-      passwordHash: formData.get('passwordHash') as string || '', // Add default value for password
-    };
-    try {
-      const result = await updateUserProfile(userData.id, userProfileData);
-      if (result.success) {
-        toast({
-          title: "Success",
-          description: result.message,
-        });
-      } else {
+    event.preventDefault();
+    startTransition(async () => {
+      const formData = new FormData(event.currentTarget);
+      const userProfileData: UpdateProfileValues = {
+        id: userData.id,
+        username: formData.get('username') as string,
+        firstName: formData.get('firstName') as string,
+        lastName: formData.get('lastName') as string,
+        email: formData.get('email') as string,
+        phoneNumber: Number(formData.get('phoneNumber')),
+        vatNumber: formData.get('vatNumber') as string,
+        streetAddress: formData.get('streetAddress') as string,
+        addressLine2: (formData.get('addressLine2') as string) || null,
+        suburb: formData.get('suburb') as string,
+        townCity: formData.get('townCity') as string,
+        postcode: formData.get('postcode') as string,
+        country: formData.get('country') as string,
+        createdAt: userData.createdAt,
+        updatedAt: new Date().toISOString(),
+      };
+
+      const password = formData.get('password') as string;
+      if (password) {
+        userProfileData.passwordHash = password;
+      }
+
+      try {
+        const result = await updateUserProfile(userData.id, userProfileData);
+        if (result.success) {
+          toast({
+            title: "Success",
+            description: result.message,
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: result.message || "Failed to update profile",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
         toast({
           title: "Error",
-          description: result.message,
+          description: "An unexpected error occurred",
           variant: "destructive",
         });
-      };
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred",
-        variant: "destructive",
-      });
-    };
-  });
-};
+      }
+    });
+  };
 
   return (
     <Card className="max-w-2xl mx-auto">
@@ -69,7 +75,16 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
+              <Input 
+                id="username" 
+                name="username" 
+                defaultValue={userData.username}
+                required 
+              />
+            </div>
 
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
@@ -103,9 +118,9 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="passwordHash">Password</Label>
               <Input 
-                id="password" 
+                id="passwordHash" 
                 name="password" 
                 type="password"
                 placeholder="Leave blank to keep current password"
@@ -147,7 +162,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               <Input 
                 id="addressLine2" 
                 name="addressLine2" 
-                defaultValue={userData.addressLine2 ?? ''}
+                defaultValue={userData.addressLine2}
               />
             </div>
 
@@ -190,9 +205,16 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
                 required 
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="createdAt">Created at {userData.createdAt}</Label>
+            </div>
+
+              <div className="space-y-2">
+              <Label htmlFor="createdAt">Updated at {userData.updatedAt}</Label>
+            </div>
           </div>
 
-          {/* Rest of the form remains the same as in your original code */}
           <CardFooter className="px-0 pb-0">
             <Button 
               type="submit" 
@@ -206,4 +228,4 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
       </CardContent>
     </Card>
   );
-};
+}

@@ -1,4 +1,3 @@
-//src/app/(main)/ClientBooksTable.tsx
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -21,21 +20,25 @@ export default function ClientBooksTable({
   const searchParams = useSearchParams();
 
   const handlePrevious = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('page', String(page - 1));
-    if (searchQuery) {
-      params.set('query', searchQuery);
+    if (searchParams) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('page', String(page - 1));
+      if (searchQuery) {
+        params.set('query', searchQuery);
+      }
+      router.push(`?${params.toString()}`);
     }
-    router.push(`?${params.toString()}`);
   };
 
   const handleNext = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('page', String(page + 1));
-    if (searchQuery) {
-      params.set('query', searchQuery);
+    if (searchParams) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('page', String(page + 1));
+      if (searchQuery) {
+        params.set('query', searchQuery);
+      }
+      router.push(`?${params.toString()}`);
     }
-    router.push(`?${params.toString()}`);
   };
 
   return (

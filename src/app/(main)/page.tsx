@@ -1,4 +1,3 @@
-//src/app/(main)/page.tsx
 import { PrismaClient, Book, Prisma } from '@prisma/client';
 import BookSearch from './ClientSearch';
 import ClientBooksTable from './ClientBooksTable';
@@ -14,20 +13,9 @@ async function fetchBooks(
     OR: [
       { title: { contains: searchQuery, mode: 'insensitive' as Prisma.QueryMode } },
       { author: { contains: searchQuery, mode: 'insensitive' as Prisma.QueryMode } },
-       {publishYear: { 
-        equals: searchQuery ? parseInt(searchQuery) : undefined 
-      } 
-    },
-    // Note: For price, you'll likely want to use specific numeric comparisons
-    { 
-      price: searchQuery 
-        ? { 
-            gte: parseFloat(searchQuery), 
-            lte: parseFloat(searchQuery) 
-          } 
-        : undefined 
-    }
-  ].filter(Boolean) // Remove 
+      { publishYear: { equals: isNaN(parseInt(searchQuery)) ? undefined : parseInt(searchQuery) } },
+      { price: { gte: isNaN(parseFloat(searchQuery)) ? undefined : parseFloat(searchQuery), lte: isNaN(parseFloat(searchQuery)) ? undefined : parseFloat(searchQuery) } }
+    ]
   } : {};
 
   const books = await prisma.book.findMany({
@@ -49,9 +37,9 @@ interface BooksPageProps {
 }
 
 export default async function BooksPage({ searchParams }: BooksPageProps) {
-  const page = Number(searchParams.page) || 1;
+  const page = Number(searchParams?.page) || 1;
   const pageSize = 10;
-  const searchQuery = searchParams.query;
+  const searchQuery = searchParams?.query;
   
   const { books, totalBooks } = await fetchBooks(page, pageSize, searchQuery);
   const totalPages = Math.ceil(totalBooks / pageSize);
@@ -63,6 +51,7 @@ export default async function BooksPage({ searchParams }: BooksPageProps) {
         books={books} 
         page={page} 
         totalPages={totalPages} 
+        searchQuery={searchQuery}
       />
     </div>
   );

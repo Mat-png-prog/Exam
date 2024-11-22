@@ -13,9 +13,11 @@ export default function ClientPagination({ totalPages, currentPage }: Pagination
   const searchParams = useSearchParams();
 
   const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('page', newPage.toString());
-    router.push(`?${params.toString()}`);
+    if (searchParams) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('page', newPage.toString());
+      router.push(`?${params.toString()}`);
+    }
   };
 
   return (

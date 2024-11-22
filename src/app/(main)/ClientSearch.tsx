@@ -9,18 +9,20 @@ export default function BookSearch() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
+  const [searchTerm, setSearchTerm] = useState(searchParams?.get('query') || '');
   const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
 
   // Update URL with search params
   const updateSearchParams = useCallback((value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set('search', value);
-    } else {
-      params.delete('search');
+    if (searchParams) {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value) {
+        params.set('query', value);
+      } else {
+        params.delete('query');
+      }
+      router.replace(`${pathname}?${params.toString()}`);
     }
-    router.replace(`${pathname}?${params.toString()}`);
   }, [pathname, router, searchParams]);
 
   // Handle input change

@@ -18,7 +18,6 @@ export default function BookSearch({ setSearchQuery }: BookSearchProps) {
 
   return (
     <Input
-      className="max-w-sm"
       placeholder="Search books..."
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}

@@ -10,12 +10,11 @@ import {
 } from '@/components/ui/table';
 import Link from 'next/link';
 import UpdateIcon from './components/UpdateIcon';
-import { Button } from '@/components/ui/button';
 import TrashBinIcon from './components/TrashBinIcon';
 
  export interface BookTableProps {
   books: Book[];
-}
+};
 
 export default function BookTable({ books }: BookTableProps) {
   return (
@@ -38,11 +37,12 @@ export default function BookTable({ books }: BookTableProps) {
             <TableCell>{book.author}</TableCell>
             <TableCell>{book.description}</TableCell>
             <TableCell>{book.price} ZAR</TableCell>
-            <TableCell className='p-10'>
+            <TableCell className='p-7'>
               <Link href={`/books/${book.id}/update`} className="font-medium text-blue-600 hover:bg-yellow-500 m-2">
                 <UpdateIcon/>
                 Update
               </Link>
+
               <Link href={`/books/${book.id}/delete`} className="font-medium text-blue-600 hover:bg-red-600 m-2">
                 <TrashBinIcon />
                 Delete
@@ -53,4 +53,4 @@ export default function BookTable({ books }: BookTableProps) {
       </TableBody>
     </Table>
   );
-}
+};

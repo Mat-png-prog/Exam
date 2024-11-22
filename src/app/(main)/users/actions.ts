@@ -1,107 +1,106 @@
 // src/app/(main)/users/actions.ts
-"use server";
+'use server'
 
 import prisma from '@/lib/prisma';
-import { validateRequest } from '../../auth';
-import { UserData } from './types';
+import { cookies } from 'next/headers';
 import { hash } from '@node-rs/argon2';
 import { revalidatePath } from 'next/cache';
-import { UpdateProfileValues } from '@/lib/validations';
+import { UpdateProfileValues, ApiResponse } from "./types";
 
-export async function getUserProfile(userId: string): Promise<UserData> {
+export async function getUserProfile(userId: string): Promise<ApiResponse<UpdateProfileValues>> {
   try {
-    console.log('Fetching user profile for userId:', userId);
+    if (!userId) {
+      return { error: 'No userId provided' };
+    }
 
-    const authResult = await validateRequest();
-    if (!authResult.user) {
-      console.error('No authenticated user');
-      throw new Error('User not authenticated');
+    const session = getSessionData();
+    if (!session?.user) {
+      return { error: 'Not authenticated' };
     }
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
+      select: {
+        id: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        passwordHash: true,
+        vatNumber: true,
+        phoneNumber: true,
+        streetAddress: true,
+        addressLine2: true,
+        suburb: true,
+        townCity: true,
+        postcode: true,
+        country: true,
+        createdAt: true,
+        updatedAt: true,
+      }
     });
 
     if (!user) {
-      console.error(`User with ID ${userId} not found`);
-      throw new Error('User not found');
+      return { error: 'User not found' };
     }
 
-    if (user.id !== authResult.user.id) {
-      console.error('User ID mismatch', {
-        requestedUserId: userId,
-        authenticatedUserId: authResult.user.id
-      });
-      throw new Error('Unauthorized');
+    if (user.id !== session.user.id) {
+      return { error: 'Unauthorized' };
     }
 
-    const { passwordHash, ...safeUserData } = user;
-    return safeUserData as UserData;
+    const { createdAt, updatedAt, ...userData } = user;
+    return { data: userData as UpdateProfileValues };
   } catch (error) {
     console.error('Error in getUserProfile:', error);
-    throw error;
+    return { error: 'Internal server error' };
   }
 }
+
+function getSessionData() {
+  throw new Error('Function not implemented.');
+}
+
 
 
 export async function updateUserProfile(
   userId: string, 
   userProfileData: UpdateProfileValues
-): Promise<{ success: boolean; message: string }> {
+): Promise<ApiResponse<void>> {
   try {
-    // Validate authentication
-    const { user: currentUser } = await validateRequest();
-    
-    if (!currentUser) {
-      return { success: false, message: 'User not authenticated' };
+    const session = getSessionData();
+    if (!session?.user) {
+      return { success: false, message: 'Not authenticated' };
     }
-    
-    // Ensure user is updating their own profile
-    if (userId !== currentUser.id) {
+
+    if (userId !== session.user.id) {
       return { success: false, message: 'Unauthorized' };
     }
+
+    const { passwordHash, ...profileData } = userProfileData;
     
-    // Separate password from other profile data
-    const { password, ...profileData } = userProfileData;
-    
-    const updateData: any = {
+    const updateData: Partial<UpdateProfileValues> & { updatedAt: Date } = {
       ...profileData,
       updatedAt: new Date(),
     };
     
-    // Hash password if provided
-    if (password) {
-      const passwordHash = await hash(password, {
-        memoryCost: 19456,
-        timeCost: 2,
-        outputLen: 32,
-        parallelism: 1,
-      });
-      updateData.passwordHash = passwordHash;
+    if (passwordHash) {
+      updateData.passwordHash = await hash(passwordHash);
     }
     
-    // Update user in database
     await prisma.user.update({
       where: { id: userId },
       data: updateData,
     });
     
-    // Revalidate the user's profile page
     revalidatePath(`/users/${userId}`);
     
-    return { 
-      success: true, 
-      message: 'Profile updated successfully' 
-    };
+    return { success: true, message: 'Profile updated successfully' };
   } catch (error) {
-    // Log the error for debugging
     console.error('Error updating user profile:', error);
-    
     return { 
       success: false, 
-      message: error instanceof Error 
-        ? error.message 
-        : 'Failed to update profile' 
+      message: error instanceof Error ? error.message : 'Failed to update profile'
     };
   }
-}
+};
+
