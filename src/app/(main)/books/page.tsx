@@ -58,9 +58,14 @@ export default async function BooksPage({
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">My Books</h1>
-        <Link href="/books/create">
-          <Button><AddIcon/>Add Book</Button>
-        </Link>
+        
+        <Button>
+          <Link href="/books/create">
+            <AddIcon />
+            Add Book
+          </Link>
+        </Button>
+        
       </div>
       {/* <BookSearch /> */}
       <BookTable books={books} />
