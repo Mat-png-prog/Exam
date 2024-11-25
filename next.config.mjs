@@ -42,7 +42,7 @@ const nextConfig = {
     remotePatterns: [], // Add remote patterns if needed
   },
   typescript: {
-    ignoreBuildErrors: true, // Enable type checking
+    ignoreBuildErrors: false, // Enable type checking
   },
  /*  swcMinify: true, // Enable SWC minification */
 };

@@ -1,6 +1,6 @@
 import { PrismaClient, Book, Prisma } from '@prisma/client';
-import BookSearch from './ClientSearch';
-import ClientBooksTable from './ClientBooksTable';
+import BookSearch from '@/components/ClientSearch';
+import ClientBooksTable from '@/components/ClientBooksTable';
 
 const prisma = new PrismaClient();
 

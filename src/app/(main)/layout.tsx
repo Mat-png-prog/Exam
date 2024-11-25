@@ -1,7 +1,7 @@
 //src/app/(main)/layout.tsx
 
 import type { Metadata } from "next";
-import Navbar from "./Navbar";
+import Navbar from "@/components/Navbar";
 import SessionProvider from "./SessionProvider";
 import { validateRequest } from "../auth";
 import { redirect } from "next/navigation";
