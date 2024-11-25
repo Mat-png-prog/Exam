@@ -14,8 +14,8 @@ export interface UpdateProfileValues {
   townCity: string;
   postcode: string;
   country: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ApiResponse<T> {

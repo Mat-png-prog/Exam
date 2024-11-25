@@ -51,8 +51,8 @@ export type LoginValues = z.infer<typeof loginSchema>;
 export type BookValues = z.infer<typeof bookSchema>;
 export const bookSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  author: z.string().min(3, "Author is required"),
-  description: z.string().min(10, "Must be more than 10 charcters"),
+  author: z.string().min(3, "Author is required to be more than 3 characters"),
+  description: z.string().min(10, "Must be more than 10 charcters and UNIQUE"),
   publishYear: z
     .number()
     .int("Year must be a whole number")

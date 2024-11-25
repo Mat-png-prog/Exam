@@ -1,3 +1,4 @@
+// src/app/(main)/users/[id]/UserProfilePage.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -13,21 +14,19 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!params.id) {
-      setError('No user ID provided');
-      setIsLoading(false);
-      return;
-    }
-
     async function fetchUserProfile() {
       try {
         setIsLoading(true);
         const result = await getUserProfile(params.id);
-        if ('error' in result) {
+        if (result.error) {
           throw new Error(result.error);
         }
-        setUserData(result.data!);
-        setError(null);
+        if (result.data) {
+          setUserData(result.data);
+          setError(null);
+        } else {
+          throw new Error('No user data returned');
+        }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
         setError(errorMessage);
@@ -44,22 +43,23 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
     fetchUserProfile();
   }, [params.id]);
 
-  const handleProfileUpdate = async (userId: string, updatedUserData: UpdateProfileValues) => {
+  const handleProfileUpdate = async (updatedUserData: UpdateProfileValues): Promise<ApiResponse<void>> => {
     try {
-      if (!updatedUserData || !userId) {
+      if (!updatedUserData || !params.id) {
         throw new Error('Invalid profile data or missing user ID');
       }
-
-      const result = await updateUserProfile(userId, updatedUserData);
-      if (!result.success) {
+      const result = await updateUserProfile(params.id, updatedUserData);
+      if (result.success) {
+        setUserData(updatedUserData);
+        toast({
+          title: 'Success',
+          description: 'Profile updated successfully',
+        });
+      } else {
         throw new Error(result.message || 'Failed to update profile');
       }
-
-      setUserData(updatedUserData);
-      toast({
-        title: 'Success',
-        description: 'Profile updated successfully',
-      });
+      
+      return result;
     } catch (err) {
       const errorMessage = err instanceof Error
         ? err.message
@@ -69,6 +69,10 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
         description: errorMessage,
         variant: 'destructive',
       });
+      return {
+        success: false,
+        message: errorMessage
+      };
     }
   };
 
@@ -84,10 +88,10 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
     return (
       <div className="flex flex-col justify-center items-center min-h-screen space-y-4 p-4">
         <h1 className="text-2xl font-bold text-red-600">
-          {error ? 'Error Loading Profile' : 'User Not Found'}
+          Error Loading Profile
         </h1>
         <p className="text-center text-gray-700">
-          {error || 'The requested user profile could not be found. To sell through us, contact us below'}
+          {error || 'Failed to load user profile. Please try again.'}
         </p>
         <Button
           onClick={() => window.location.href = '/contact'}
@@ -102,7 +106,7 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
   return (
     <UserProfileForm
       userData={userData}
-      updateUserProfile={handleProfileUpdate}
+      updateUserProfile={(userId, userProfileData) => handleProfileUpdate(userProfileData)}
     />
   );
 }

@@ -1,8 +1,17 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+function generateUniqueDescription() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < 10; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
 async function main() {
-  const userId = '7 books'; // Replace with a valid user ID
+  const userId = 'r4nxa63a2sbxmh5v'; // Replace with a valid user ID 7 books
 
   const books = Array.from({ length: 7 }).map((_, i) => ({
     title: `Book Title ${i + 1}`,
@@ -10,7 +19,7 @@ async function main() {
     publishYear: 2000 + (i % 21),
     price: (i + 1) * 10,
     available: i % 2 === 0,
-    description: `Description for Book ${i + 1}`,
+    description: generateUniqueDescription(),
     userId,
   }));
 
@@ -23,3 +32,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+     

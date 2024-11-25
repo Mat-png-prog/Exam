@@ -36,7 +36,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
         postcode: formData.get('postcode') as string,
         country: formData.get('country') as string,
         createdAt: userData.createdAt,
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date(),
       };
 
       const password = formData.get('password') as string;
@@ -144,6 +144,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
                 id="vatNumber" 
                 name="vatNumber" 
                 defaultValue={userData.vatNumber}
+                required
               />
             </div>
 
@@ -162,7 +163,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               <Input 
                 id="addressLine2" 
                 name="addressLine2" 
-                defaultValue={userData.addressLine2}
+                defaultValue={userData.addressLine2 || ''}
               />
             </div>
 
@@ -207,11 +208,11 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="createdAt">Created at {userData.createdAt}</Label>
+              <Label>Created at: {userData.createdAt.toLocaleDateString()}</Label>
             </div>
 
-              <div className="space-y-2">
-              <Label htmlFor="createdAt">Updated at {userData.updatedAt}</Label>
+            <div className="space-y-2">
+              <Label>Updated at: {userData.updatedAt.toLocaleDateString()}</Label>
             </div>
           </div>
 

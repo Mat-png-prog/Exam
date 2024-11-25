@@ -15,9 +15,9 @@
     "del-node-mode&lock": "rmdir /s /q node_modules && rmdir /s /q  package-lock.json",
     "legacy": "npm install --legacy-peer-deps",
     "push": "npx prisma db push",
-    "seed:20-books": "node seeds/seed_20_books.cjs",
-    "seed:11-books": "node seeds/seed_11_books.cjs",
-    "seed:7-books": "node seeds/seed_7_books.cjs",
+    "see-20-books": "node seeds/seed_20_books.cjs",
+    "seed-11-books": "node seeds/seed_11_books.cjs",
+    "seed-7-books": "node seeds/seed_7_books.cjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {

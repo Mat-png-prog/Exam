@@ -2,10 +2,10 @@
 'use server'
 
 import prisma from '@/lib/prisma';
-import { cookies } from 'next/headers';
 import { hash } from '@node-rs/argon2';
 import { revalidatePath } from 'next/cache';
 import { UpdateProfileValues, ApiResponse } from "./types";
+import { validateRequest } from '../../auth';
 
 export async function getUserProfile(userId: string): Promise<ApiResponse<UpdateProfileValues>> {
   try {
@@ -13,12 +13,12 @@ export async function getUserProfile(userId: string): Promise<ApiResponse<Update
       return { error: 'No userId provided' };
     }
 
-    const session = getSessionData();
-    if (!session?.user) {
+    const { user } = await validateRequest();
+    if (!user) {
       return { error: 'Not authenticated' };
     }
 
-    const user = await prisma.user.findUnique({
+    const userData = await prisma.user.findUnique({
       where: { id: userId },
       select: {
         id: true,
@@ -40,45 +40,46 @@ export async function getUserProfile(userId: string): Promise<ApiResponse<Update
       }
     });
 
-    if (!user) {
+    if (!userData) {
       return { error: 'User not found' };
     }
 
-    if (user.id !== session.user.id) {
+    if (userData.id !== user.id) {
       return { error: 'Unauthorized' };
     }
 
-    const { createdAt, updatedAt, ...userData } = user;
-    return { data: userData as UpdateProfileValues };
+    return { 
+      success: true,
+      data: {
+        ...userData,
+        createdAt: userData.createdAt,
+        updatedAt: userData.updatedAt
+      }
+    };
   } catch (error) {
     console.error('Error in getUserProfile:', error);
     return { error: 'Internal server error' };
   }
 }
 
-function getSessionData() {
-  throw new Error('Function not implemented.');
-}
-
-
-
+// ... rest of the file remains the same
 export async function updateUserProfile(
   userId: string, 
   userProfileData: UpdateProfileValues
 ): Promise<ApiResponse<void>> {
   try {
-    const session = getSessionData();
-    if (!session?.user) {
+    const { user } = await validateRequest();
+    if (!user) {
       return { success: false, message: 'Not authenticated' };
     }
 
-    if (userId !== session.user.id) {
+    if (userId !== user.id) {
       return { success: false, message: 'Unauthorized' };
     }
 
     const { passwordHash, ...profileData } = userProfileData;
     
-    const updateData: Partial<UpdateProfileValues> & { updatedAt: Date } = {
+    const updateData: any = {
       ...profileData,
       updatedAt: new Date(),
     };
@@ -102,5 +103,4 @@ export async function updateUserProfile(
       message: error instanceof Error ? error.message : 'Failed to update profile'
     };
   }
-};
-
+}
