@@ -63,7 +63,7 @@ export default function BookForm({ book, onSubmit }: BookFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Description</FormLabel>
-              <h1 className='text-4xl'> Must be unique</h1>
+              <h1 className='text-3xl'> Must be unique</h1>
               <FormControl>
                 <Textarea2 {...field}  placeholder='Must be unique'/>
               </FormControl>

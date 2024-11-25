@@ -2,6 +2,13 @@
 import { Suspense } from 'react';
 import prisma from '@/lib/prisma';
 import ClientDeleteBook from './ClientDeleteBook';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@/components/ui/table';
 
 async function fetchBook(id: string) {
   const book = await prisma.book.findUnique({
@@ -26,8 +33,31 @@ export default async function DeleteBookPage({ params }: DeleteBookPageProps) {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Delete Book</h1>
-      <p>Are you sure you want to delete the book titled &apos;{book.title}&apos;?</p>
+      <Table className="w-full mb-4">
+        <TableHead className="text-red-700 text-2xl font-bold mb-4">Are you sure you want to delete the following book?</TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Title</TableCell>
+            <TableCell>{book.title}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Author</TableCell>
+            <TableCell>{book.author}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Description</TableCell>
+            <TableCell>{book.description}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Price</TableCell>
+            <TableCell>{book.price}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Publish Year</TableCell>
+            <TableCell>{book.publishYear}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       <Suspense fallback={<div>Loading...</div>}>
         <ClientDeleteBook id={params.id} />
       </Suspense>

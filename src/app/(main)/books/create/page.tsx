@@ -22,7 +22,7 @@ export default function CreateBookPage() {
 
   return (
     <div>
-      <h1>Add New Book</h1>
+      <h1 className="text-4xl p-3">Add New Book</h1>
       <BookForm onSubmit={handleSubmit} />
     </div>
   );
