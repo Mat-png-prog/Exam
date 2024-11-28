@@ -30,16 +30,15 @@ async function fetchBooks(
 }
 
 interface BooksPageProps {
-  searchParams: { 
-    page?: string;
-    query?: string;
-  };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string; query?: string }>;
 }
 
+
 export default async function BooksPage({ searchParams }: BooksPageProps) {
-  const page = Number(searchParams?.page) || 1;
+  const page = Number((await searchParams)?.page) || 1;
   const pageSize = 10;
-  const searchQuery = searchParams?.query;
+  const searchQuery = (await searchParams)?.query;
   
   const { books, totalBooks } = await fetchBooks(page, pageSize, searchQuery);
   const totalPages = Math.ceil(totalBooks / pageSize);
@@ -56,3 +55,4 @@ export default async function BooksPage({ searchParams }: BooksPageProps) {
     </div>
   );
 }
+

@@ -1,15 +1,14 @@
 //src/app/(main)/book/[id]/page.tsx
-
 import { validateRequest } from "../../../auth";
 import prisma from "@/lib/prisma";
-import { updateBook } from "./actions";
 import BookForm from "@/app/(main)/books/BookForm";
 
-export default async function UpdateBookPage({
-  params: { id },
+export default async function ShowBookPage({
+  params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const { user } = await validateRequest();
   if (!user) throw new Error("Unauthorized");
 
@@ -29,11 +28,12 @@ export default async function UpdateBookPage({
     available: boolean;
     description: string;
   }) => {
-    await updateBook(id, data);
+    return Promise.resolve();
   };
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Edit Book</h1>
+      <h1 className="text-2xl font-bold mb-4">Book Information</h1>
       <BookForm book={book} onSubmit={handleSubmit} />
     </div>
   );

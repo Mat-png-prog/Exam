@@ -1,4 +1,3 @@
-// src/app/(main)/books/[id]/delete/page.tsx
 import { Suspense } from 'react';
 import prisma from '@/lib/prisma';
 import ClientDeleteBook from './ClientDeleteBook';
@@ -23,18 +22,19 @@ async function fetchBook(id: string) {
 }
 
 interface DeleteBookPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function DeleteBookPage({ params }: DeleteBookPageProps) {
-  const book = await fetchBook(params.id);
+  const book = await fetchBook((await params).id);
 
   return (
     <div>
+      <h1 className="text-red-700 text-2xl font-bold mb-4">Delete Book</h1>
+      <p>Are you sure you want to delete the following book?</p>
       <Table className="w-full mb-4">
-        <TableHead className="text-red-700 text-2xl font-bold mb-4">Are you sure you want to delete the following book?</TableHead>
         <TableBody>
           <TableRow>
             <TableCell>Title</TableCell>
@@ -59,7 +59,7 @@ export default async function DeleteBookPage({ params }: DeleteBookPageProps) {
         </TableBody>
       </Table>
       <Suspense fallback={<div>Loading...</div>}>
-        <ClientDeleteBook id={params.id} />
+        <ClientDeleteBook id={(await params).id} />
       </Suspense>
     </div>
   );

@@ -1,6 +1,6 @@
+//src/app/(main)/books/[id]/update/page.tsx
 import prisma from '@/lib/prisma';
 import UpdateBookForm from './UpdateBookForm';
-
 
 async function fetchBook(id: string) {
   const book = await prisma.book.findUnique({
@@ -14,7 +14,8 @@ async function fetchBook(id: string) {
   return book;
 }
 
-export default async function UpdateBookPage({ params: { id } }: { params: { id: string } }) {
+export default async function UpdateBookPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const book = await fetchBook(id);
 
   return (
