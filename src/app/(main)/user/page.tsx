@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { getUserProfile } from './actions';
 import { UpdateProfileValues } from './types';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function UserProfile(): JSX.Element {
   const [userData, setUserData] = useState<UpdateProfileValues | null>(null);
@@ -52,7 +54,7 @@ export default function UserProfile(): JSX.Element {
     );
   }
 
-  return (
+  return (<>
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle>User Profile</CardTitle>
@@ -62,7 +64,10 @@ export default function UserProfile(): JSX.Element {
         <p><strong>First Name:</strong> {userData?.firstName || 'N/A'}</p>
         <p><strong>Last Name:</strong> {userData?.lastName || 'N/A'}</p>
         <p><strong>Email:</strong> {userData?.email || 'N/A'}</p>
-        <p><strong>Phone Number:</strong> {userData?.phoneNumber || 'N/A'}</p>
+        <p><strong>Phone Number:</strong> {userData?.phoneNumber || 'N/A'}
+        <Button className='ml-32'>
+        <Link href={`user/account-info/update`}>Update Profile</Link>
+    </Button></p>
         <p><strong>VAT Number:</strong> {userData?.vatNumber || 'N/A'}</p>
         <p><strong>Street Address:</strong> {userData?.streetAddress || 'N/A'}</p>
         <p><strong>Address Line 2:</strong> {userData?.addressLine2 || 'N/A'}</p>
@@ -72,7 +77,10 @@ export default function UserProfile(): JSX.Element {
         <p><strong>Country:</strong> {userData?.country || 'N/A'}</p>
         <p><strong>Created At:</strong> {userData?.createdAt ? new Date(userData.createdAt).toLocaleDateString() : 'N/A'}</p>
         <p><strong>Updated At:</strong> {userData?.updatedAt ? new Date(userData.updatedAt).toLocaleDateString() : 'N/A'}</p>
+
       </CardContent>
     </Card>
+    
+  </>
   );
 }
