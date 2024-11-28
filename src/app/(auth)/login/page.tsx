@@ -7,7 +7,7 @@ import Image from "next/image";
 import LoginForm from "./LoginForm";
 
 export const metadata: Metadata = {
-  title: "Login"
+  title: "Log In"
 };
 
 export default function Page() {

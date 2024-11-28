@@ -2,7 +2,6 @@
 
 import SignupImage from "@/assets/signupImage";
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import SignUpForm from "./SignupForm";
 
