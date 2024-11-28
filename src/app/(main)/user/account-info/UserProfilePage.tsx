@@ -1,4 +1,3 @@
-// src/app/(main)/users/[id]/UserProfilePage.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -8,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { UpdateProfileValues, ApiResponse } from '../types';
 
-export default function UserProfilePage({ params }: { params: { id: string } }) {
+export default function UserProfilePage() {
   const [userData, setUserData] = useState<UpdateProfileValues | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +16,7 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
     async function fetchUserProfile() {
       try {
         setIsLoading(true);
-        const result = await getUserProfile(params.id);
+        const result = await getUserProfile(); // No argument needed
         if (result.error) {
           throw new Error(result.error);
         }
@@ -41,16 +40,16 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
     }
 
     fetchUserProfile();
-  }, [params.id]);
+  }, []);
 
-  const handleProfileUpdate = async (updatedUserData: UpdateProfileValues): Promise<ApiResponse<void>> => {
+  const handleProfileUpdate = async (userProfileData: UpdateProfileValues): Promise<ApiResponse<void>> => {
     try {
-      if (!updatedUserData || !params.id) {
-        throw new Error('Invalid profile data or missing user ID');
+      if (!userProfileData) {
+        throw new Error('Invalid profile data');
       }
-      const result = await updateUserProfile(params.id, updatedUserData);
+      const result = await updateUserProfile(userProfileData); // No userId needed
       if (result.success) {
-        setUserData(updatedUserData);
+        setUserData(userProfileData);
         toast({
           title: 'Success',
           description: 'Profile updated successfully',
@@ -95,7 +94,6 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
         </p>
         <Button
           onClick={() => window.location.href = '/contact'}
-          variant="outline"
         >
           Return to Contact
         </Button>
@@ -106,7 +104,7 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
   return (
     <UserProfileForm
       userData={userData}
-      updateUserProfile={(userId, userProfileData) => handleProfileUpdate(userProfileData)}
+      updateUserProfile={handleProfileUpdate} // Correctly passing the function
     />
   );
 }

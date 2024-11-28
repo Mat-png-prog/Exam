@@ -5,7 +5,6 @@ export interface UpdateProfileValues {
   firstName: string;
   lastName: string;
   email: string;
-  passwordHash?: string;
   phoneNumber: number;
   vatNumber: string;
   streetAddress: string;

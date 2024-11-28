@@ -5,13 +5,13 @@ import React, { useTransition } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { UpdateProfileValues, ApiResponse } from '../types';
+import LoadingButton from '@/components/LoadingButton';
 
 interface UserProfileFormProps {
   userData: UpdateProfileValues;
-  updateUserProfile: (userId: string, userProfileData: UpdateProfileValues) => Promise<ApiResponse<void>>;
+  updateUserProfile: (userProfileData: UpdateProfileValues) => Promise<ApiResponse<void>>;
 }
 
 export default function UserProfileForm({ userData, updateUserProfile }: UserProfileFormProps): JSX.Element {
@@ -39,17 +39,12 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
         updatedAt: new Date(),
       };
 
-      const password = formData.get('password') as string;
-      if (password) {
-        userProfileData.passwordHash = password;
-      }
-
       try {
-        const result = await updateUserProfile(userData.id, userProfileData);
+        const result = await updateUserProfile(userProfileData);
         if (result.success) {
           toast({
             title: "Success",
-            description: result.message,
+            description: "Profile updated successfully",
           });
         } else {
           toast({
@@ -114,16 +109,6 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
                 type="email"
                 defaultValue={userData.email}
                 required 
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="passwordHash">Password</Label>
-              <Input 
-                id="passwordHash" 
-                name="password" 
-                type="password"
-                placeholder="Leave blank to keep current password"
               />
             </div>
 
@@ -208,22 +193,21 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
             </div>
 
             <div className="space-y-2">
-              <Label>Created at: {userData.createdAt.toLocaleDateString()}</Label>
+              <Label>Created at: {new Date(userData.createdAt).toLocaleDateString()}</Label>
             </div>
 
             <div className="space-y-2">
-              <Label>Updated at: {userData.updatedAt.toLocaleDateString()}</Label>
+              <Label>Updated at: {new Date(userData.updatedAt).toLocaleDateString()}</Label>
             </div>
           </div>
 
           <CardFooter className="px-0 pb-0">
-            <Button 
-              type="submit" 
+            <LoadingButton
+              type="submit"
               disabled={isPending}
-              className="w-full"
-            >
+              className="w-full" loading={false}            >
               {isPending ? 'Updating...' : 'Update Profile'}
-            </Button>
+            </LoadingButton>
           </CardFooter>
         </form>
       </CardContent>
