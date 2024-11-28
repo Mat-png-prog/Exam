@@ -71,7 +71,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Account Settings</CardTitle>
+        <CardTitle>Account Information</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
