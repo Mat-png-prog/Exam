@@ -1,8 +1,8 @@
 'use server';
 
 import prisma from '@/lib/prisma';
-import { UpdateProfileValues, ApiResponse } from './types';
-import { validateRequest } from '../../auth';
+import { UpdateProfileValues, ApiResponse } from '../types';
+import { validateRequest } from '../../../auth';
 
 export async function getUserProfile(): Promise<ApiResponse<UpdateProfileValues>> {
   try {
@@ -69,12 +69,12 @@ export async function updateUserProfile(
       data: updateData,
     });
 
-    return { success: true, message: 'Profile updated successfully' };
+    return { success: true, message: 'Profile shown successfully' };
   } catch (error) {
-    console.error('Error updating user profile:', error);
+    console.error('Error fetching user profile:', error);
     return {
       success: false,
-      message: error instanceof Error ? error.message : 'Failed to update profile'
+      message: error instanceof Error ? error.message : 'Failed to fetch profile'
     };
   }
 }

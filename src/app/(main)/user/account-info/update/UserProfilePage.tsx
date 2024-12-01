@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getUserProfile, updateUserProfile } from '../actions';
+import { getUserProfile, updateUserProfile } from './actions';
 import UserProfileForm from './UserProfileForm';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { UpdateProfileValues, ApiResponse } from '../types';
+import { UpdateProfileValues, ApiResponse } from '../../types';
 
 export default function UserProfilePage() {
   const [userData, setUserData] = useState<UpdateProfileValues | null>(null);
