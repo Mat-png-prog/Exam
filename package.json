@@ -9,7 +9,7 @@
     "cache-clean": "npm cache clean --force",
     "build": "next build",
     "start": "next start",
-    "lint": "npm run clean && next lint",
+    "lint": "next lint",
     "unin-node_mod": "rmdir /s /q node_modules",
     "del-lock": "del package-lock.json",
     "del-node-mode&lock": "rmdir /s /q node_modules && rmdir /s /q  package-lock.json",
