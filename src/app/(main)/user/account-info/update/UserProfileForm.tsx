@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/componen
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
-import { UpdateProfileValues, ApiResponse } from '../types';
+import { UpdateProfileValues, ApiResponse } from '../../types';
 import LoadingButton from '@/components/LoadingButton';
 
 interface UserProfileFormProps {

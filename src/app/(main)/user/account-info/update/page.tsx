@@ -1,7 +1,7 @@
-//src/app/(main)/users/[id]/page.tsx
-import UserProfilePage from './UserProfilePage';
+// src/app/(main)/user/account-info/update/page.tsx
 
-export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  return <UserProfilePage params={{ id }} />;
+import UserProfilePage from './UserProfilePage'; // Adjust import path as needed
+
+export default async function ProfilePage() {
+  return <UserProfilePage />;
 }
