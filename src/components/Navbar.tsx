@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
         </div>
 
           <div>
-            <Link  href="#" className={styles.icon}>
+            <Link  href="/contact" className={styles.icon}>
               Contact
           </Link>
         </div>
