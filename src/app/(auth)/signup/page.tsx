@@ -16,7 +16,7 @@ export default function Page() {
         <div className="w-full space-y-10 overflow-y-auto p-10 md:w-1/2 font-georgia">
           <div className="space-y-1 text-center">
             <h1 className="text-3xl font-bold">Sign up to The Bookstore</h1>
-            <h2 className="w-full text-xl">Input may not show on very small screens</h2>
+            <h2 className="w-full text-xl">Input may not show on very small screens and use arrows to scroll</h2>
             <p className="text-muted-foreground">
               A place where even <span className="italic">you</span> can find a book.
             </p>
