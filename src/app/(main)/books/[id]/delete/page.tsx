@@ -53,8 +53,8 @@ export default async function DeleteBookPage({ params }: DeleteBookPageProps) {
             <TableCell>{book.description}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Price</TableCell>
-            <TableCell>{book.price}</TableCell>
+            <TableCell>Price (Zar)</TableCell>
+            <TableCell>R{book.price}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Publish Year</TableCell>
