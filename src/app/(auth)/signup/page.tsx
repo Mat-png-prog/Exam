@@ -1,10 +1,9 @@
 //src/app/(auth)/signup/page.tsx
 
-import SignupImage from "@/assets/signupImage";
 import { Metadata } from "next";
 import Link from "next/link";
 import SignUpForm from "./SignupForm";
-import LoginImage from "@/assets/loginImage"; // Import the LoginImage component
+import SignupImage from "@/assets/signupImage";
 
 export const metadata: Metadata = {
   title: "Sign Up",
@@ -33,7 +32,7 @@ export default function Page() {
           <div className="absolute top-0 left-0 w-full h-full bg-brown-500 transform rotate-90">
             <div className="absolute top-0 left-0 w-16 h-16 bg-white rounded-full"></div>
           </div>
-          <LoginImage />
+          <SignupImage />
         </div>
       </div>
     </main>
