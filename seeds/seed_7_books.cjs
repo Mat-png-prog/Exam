@@ -11,7 +11,7 @@ function generateUniqueDescription() {
 }
 
 async function main() {
-  const userId = 'r4nxa63a2sbxmh5v'; // Replace with a valid user ID 7 books
+  const userId = '7-books'; // Replace with a valid user ID 7 books
 
   const books = Array.from({ length: 7 }).map((_, i) => ({
     title: `Book Title ${i + 1}`,
