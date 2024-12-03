@@ -1,6 +1,12 @@
 import { PrismaClient, Book, Prisma } from '@prisma/client';
 import BookSearch from '@/components/ClientSearch';
 import ClientBooksTable from '@/components/ClientBooksTable';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Home Page",
+};
+
 
 const prisma = new PrismaClient();
 

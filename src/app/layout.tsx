@@ -1,7 +1,6 @@
 //src/app/layout.tsx
 
 import { ThemeProvider } from "next-themes";
-import type { Metadata } from "next";
 import "./globals.css";
 
 

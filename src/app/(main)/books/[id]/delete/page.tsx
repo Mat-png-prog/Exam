@@ -7,6 +7,11 @@ import {
   TableCell,
   TableRow,
 } from '@/components/ui/table';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Delete-Book",
+};
 
 async function fetchBook(id: string) {
   const book = await prisma.book.findUnique({

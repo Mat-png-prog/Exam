@@ -1,6 +1,11 @@
 //src/app/(main)/books/[id]/update/page.tsx
 import prisma from '@/lib/prisma';
 import UpdateBookForm from './UpdateBookForm';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Update-Book",
+};
 
 async function fetchBook(id: string) {
   const book = await prisma.book.findUnique({

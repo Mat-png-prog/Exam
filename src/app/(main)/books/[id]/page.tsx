@@ -3,6 +3,11 @@ import { validateRequest } from "../../../auth";
 import prisma from "@/lib/prisma";
 import BookForm from "@/app/(main)/books/BookForm";
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Edit-book",
+};
 export default async function ShowBookPage({
   params,
 }: {

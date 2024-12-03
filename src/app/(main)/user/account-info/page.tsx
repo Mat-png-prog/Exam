@@ -6,6 +6,11 @@ import { getUserProfile } from './actions';
 import { UpdateProfileValues } from '../types';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "ACCOUNT-INFO",
+};
 
 export default function UserProfile(): JSX.Element {
   const [userData, setUserData] = useState<UpdateProfileValues | null>(null);
