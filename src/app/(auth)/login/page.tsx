@@ -6,9 +6,6 @@ import LoginImage from "@/assets/loginImage";
 import Image from "next/image";
 import LoginForm from "./LoginForm";
 
-export const metadata: Metadata = {
-  title: "Log In"
-};
 
 export default function Page() {
   return (
