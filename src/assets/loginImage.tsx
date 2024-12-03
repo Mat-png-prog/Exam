@@ -1,7 +1,8 @@
 import React from 'react';
 
 const LoginImage = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  
+  <svg  className='relative ' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400 " aria-readonly="true">
     <defs>
       <filter id="woodGrain" x="0%" y="0%" width="100%" height="100%">
         <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="turbulence" />
@@ -59,9 +60,8 @@ const LoginImage = () => (
             <text
               x={bookWidth / 2}
               y={bookHeight / 2}
-              fontSize="8"
+              fontSize="20"
               textAnchor="middle"
-              fill="rgba(255,255,255,0.5)"
               transform={`rotate(-90 ${bookWidth / 2} ${bookHeight / 2})`}
             >
               Book

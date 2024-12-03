@@ -231,7 +231,7 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
-        <LoadingButton loading={isPending} type="submit" className="w-full">
+        <LoadingButton loading={isPending} type="submit" className=" sm:autofill:relative">
           Create account
         </LoadingButton>
       </form>

@@ -35,7 +35,7 @@ export default function LoginForm() {
     return(
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            {error && <p className="text-center text-destructive">{error}</p>}
+            {error && <p className="relative text-center text-destructive">{error}</p>}
             <FormField
               control={form.control}
               name="username"
@@ -62,7 +62,7 @@ export default function LoginForm() {
                 </FormItem>
               )}
               />
-              <LoadingButton loading={isPending} type="submit" className="w-full">
+              <LoadingButton loading={isPending} type="submit" >
                 Log in
               </LoadingButton>
             </form>
