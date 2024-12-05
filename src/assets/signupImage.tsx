@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SignupImage = () => (
-  <div className="relative top-0 right-0 w-[40vw] h-[100vh]  overflow-hidden">
+  <div className="relative top-0 right-0 w-[40vw] h-[100vh] sm:hidden overflow-hidden">
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
       viewBox="0 0 400 800"  // Adjusted viewBox to match vertical orientation
