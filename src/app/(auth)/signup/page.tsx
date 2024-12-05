@@ -32,7 +32,9 @@ export default function Page() {
           <div className="absolute top-0 left-0 w-full h-full bg-brown-500 transform rotate-90">
             <div className="absolute top-0 left-0 w-16 h-16 bg-white rounded-full"></div>
           </div>
-          <SignupImage />
+          <div className="sm:hidden">
+            <SignupImage />
+          </div>
         </div>
       </div>
     </main>

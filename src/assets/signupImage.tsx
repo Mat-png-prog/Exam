@@ -1,8 +1,7 @@
-import { cn } from '@/lib/utils';
 import React from 'react';
 
 const SignupImage = () => (
-  <div className={cn("relative top-0 right-0 w-[40vw] h-[100vh] overflow-hidden", { "sm:hidden": true })}>
+  <div className="relative top-0 right-0 w-[40vw] h-[100vh]  overflow-hidden">
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
       viewBox="0 0 400 800"  // Adjusted viewBox to match vertical orientation
