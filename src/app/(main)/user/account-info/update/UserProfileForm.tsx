@@ -64,14 +64,14 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
   };
 
   return (
-    <Card className="flex max-w-2xl mx-auto absolute">
+    <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle>Account Information</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2 relative">
+          <div className=" gap-4">
+            <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input 
                 id="username" 
@@ -81,7 +81,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
               <Input 
                 id="firstName" 
@@ -91,7 +91,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
             
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label htmlFor="lastName">Last Name</Label>
               <Input 
                 id="lastName" 
@@ -101,7 +101,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
             
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input 
                 id="email" 
@@ -112,7 +112,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label htmlFor="phoneNumber">Phone Number</Label>
               <Input 
                 id="phoneNumber" 
@@ -123,7 +123,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label htmlFor="vatNumber">VAT Number</Label>
               <Input 
                 id="vatNumber" 
@@ -133,7 +133,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="col-span-2 space-y-2 reltive ">
+            <div className=" space-y-2 reltive ">
               <Label htmlFor="streetAddress">Street Address</Label>
               <Input 
                 id="streetAddress" 
@@ -143,7 +143,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="col-span-2 space-y-2 relative">
+            <div className=" space-y-2">
               <Label htmlFor="addressLine2">Address Line 2</Label>
               <Input 
                 id="addressLine2" 
@@ -152,7 +152,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label htmlFor="suburb">Suburb</Label>
               <Input 
                 id="suburb" 
@@ -172,7 +172,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label htmlFor="postcode">Postal Code</Label>
               <Input 
                 id="postcode" 
@@ -182,7 +182,7 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label htmlFor="country">Country</Label>
               <Input 
                 id="country" 
@@ -192,11 +192,11 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
               />
             </div>
 
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label>Created at: {new Date(userData.createdAt).toLocaleDateString()}</Label>
             </div>
 
-            <div className="space-y-2 relative">
+            <div className="space-y-2">
               <Label>Updated at: {new Date(userData.updatedAt).toLocaleDateString()}</Label>
             </div>
           </div>
