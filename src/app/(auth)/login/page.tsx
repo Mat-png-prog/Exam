@@ -15,7 +15,7 @@ export default function Page() {
       <div className="flex h-full max-h-[40rem] max-w-[64rem] overflow-hidden rounded-2xl bg-card shadow-2xl">
         <div className="w-full space-y-10 overflow-y-auto p-10 md:w-1/2">
           <h1 className="text-center text-3xl font-bold w-full">Login to The Bookstore</h1>
-           <h2 className="w-full text-xl">Input may not show on very small screens</h2>
+          <h2 className="w-full text-xl">Input may not show on very small screens</h2>
           <div className="space-y-5">
             <LoginForm />
             <Link href="/signup" className="block text-center text-primary hover:underline">
@@ -27,4 +27,4 @@ export default function Page() {
       </div>
     </main>
   );
-};
+}
