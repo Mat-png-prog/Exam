@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/PasswordInput";
 import LoadingButton from "@/components/LoadingButton";
+import { cn } from "@/lib/utils";
 
 export default function LoginForm() {
     const[error, setError] = useState<string>();
@@ -56,7 +57,7 @@ export default function LoginForm() {
                 <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                        <PasswordInput placeholder="Password" {...field}/>
+                          <PasswordInput className={cn('w-full')} placeholder="Password" {...field}/>
                     </FormControl>
                     <FormMessage />
                 </FormItem>
