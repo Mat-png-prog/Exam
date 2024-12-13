@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import SessionProvider from "./SessionProvider";
 import { validateRequest } from "../auth";
-import { redirect } from "next/navigation";
 
 
 export const metadata: Metadata = {
@@ -20,12 +19,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await validateRequest();
-
-  if (!session.user) redirect("/login");
+  const { user, session } = await validateRequest();
+  const userCount = user ? 1 : 0;
 
   return (
-    <SessionProvider value={session}>
+    <SessionProvider value={{ user, session: session || undefined, userCount }}>
       <html lang="en">
       <body className="bg">
         <Navbar/>
@@ -35,3 +33,4 @@ export default async function RootLayout({
   </SessionProvider>
   );
 }
+

@@ -62,22 +62,19 @@ export default function UserProfile(): JSX.Element {
       </CardHeader>
       <CardContent className="space-y-2">
         <p><strong>Username:</strong> {userData?.username || 'N/A'}</p>
-        <p><strong>First Name:</strong> {userData?.firstName || 'N/A'}</p>
-        <p><strong>Last Name:</strong> {userData?.lastName || 'N/A'}</p>
-        <p><strong>Email:</strong> {userData?.email || 'N/A'}</p>
+        <p><strong>First Name:</strong> {userData?.firstName}</p>
+        <p><strong>Last Name:</strong> {userData?.lastName}</p>
+        <p><strong>Email:</strong> {userData?.email}</p>
         <p><strong>Phone Number:</strong> {userData?.phoneNumber || 'N/A'}
         <Button className='ml-32'>
         <Link href={`/user/account-info/update`}>Update Profile</Link>
-    </Button></p>
-        <p><strong>VAT Number:</strong> {userData?.vatNumber || 'N/A'}</p>
-        <p><strong>Street Address:</strong> {userData?.streetAddress || 'N/A'}</p>
-        <p><strong>Address Line 2:</strong> {userData?.addressLine2 || 'N/A'}</p>
-        <p><strong>Suburb:</strong> {userData?.suburb || 'N/A'}</p>
-        <p><strong>Town/City:</strong> {userData?.townCity || 'N/A'}</p>
-        <p><strong>Postal Code:</strong> {userData?.postcode || 'N/A'}</p>
-        <p><strong>Country:</strong> {userData?.country || 'N/A'}</p>
-        <p><strong>Created At:</strong> {userData?.createdAt ? new Date(userData.createdAt).toLocaleDateString() : 'N/A'}</p>
-        <p><strong>Updated At:</strong> {userData?.updatedAt ? new Date(userData.updatedAt).toLocaleDateString() : 'N/A'}</p>
+      </Button></p>
+        <p><strong>Suburb:</strong> {userData?.suburb}</p>
+        <p><strong>Town/City:</strong> {userData?.townCity}</p>
+        <p><strong>Postal Code:</strong> {userData?.postcode}</p>
+        <p><strong>Country:</strong> {userData?.country}</p>
+        <p><strong>Created At:</strong> {userData?.createdAt ? new Date(userData.createdAt).toLocaleDateString() : "--/--/--"}</p>
+        <p><strong>Updated At:</strong> {userData?.updatedAt ? new Date(userData.updatedAt).toLocaleDateString(): "--/--/--"}</p>
 
       </CardContent>
     </Card>

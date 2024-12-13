@@ -41,9 +41,9 @@ const nextConfig = {
     domains: [], // Add your image domains if needed
     remotePatterns: [], // Add remote patterns if needed
   },
-  typescript: {
+ /*  typescript: {
     ignoreBuildErrors: false, // Enable type checking
-  },
+  }, */
  /*  swcMinify: true, // Enable SWC minification */
 };
 

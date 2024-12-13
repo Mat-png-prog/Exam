@@ -1,12 +1,14 @@
-//src/app/(main)/Navbar.tsx
+//src/app/(main)/Navbar.tsxe 
 "use client";
 
 import React, { useState } from 'react';
 import Link from "next/link";
 import UserButton from '@/components/UserButton';
+import { useSession } from '@/app/(main)/SessionProvider';
 import styles from './app.module.css';
 
 const Navbar: React.FC = () => {
+  const { user } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -21,35 +23,31 @@ const Navbar: React.FC = () => {
         </Link >
       </div>
 
-        <div className="w-full h-full flex items-center justify-between">
-          <div>
+      <div className="ml-6 w-full h-full flex items-center justify-between">
+        <div>
+          {user && (
             <Link href="/books" className="w-auto h-auto hover:text-gray-400 mr-4">
               Edit page
             </Link>
-          </div>
-          <div>
-            <Link  href="#" className="icon">
-              About
-            </Link>
-          </div>
-          <div>
-            <Link  href="#" className=" hover:text-gray-400 mr-4">
-              Services
-            </Link >
+          )}
         </div>
-
-          <div>
-            <Link  href="/contact" className={styles.icon}>
-              Contact
+        
+        <div>
+          <Link href="/about" className={styles.icon}>
+            About
           </Link>
         </div>
-        
-        <UserButton className={styles.icon} />
-        
+
+        <div>
+          <Link href="/contact" className={styles.icon}>
+            Contact
+          </Link>
         </div>
+
+        <UserButton className={styles.icon} />
+      </div>
     </nav>
   );
 };
 
 export default Navbar;
-

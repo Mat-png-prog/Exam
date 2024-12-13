@@ -6,9 +6,6 @@ export interface UpdateProfileValues {
   lastName: string;
   email: string;
   phoneNumber: number;
-  vatNumber: string;
-  streetAddress: string;
-  addressLine2?: string | null;
   suburb: string;
   townCity: string;
   postcode: string;

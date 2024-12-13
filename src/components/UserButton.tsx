@@ -1,4 +1,5 @@
 //src/components/UserButton.tsx
+
 "use client";
 
 import { logout } from "@/app/(auth)/actions";
@@ -37,15 +38,29 @@ export default function UserButton({ className }: UserButtonProps) {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>Logged in as @{user.username}</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          {user && user.username ? `Logged in as @${user.username}` : ""}
+        </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
-        
-        <Link href={`/user/account-info`} legacyBehavior>
-          <DropdownMenuItem>
-            <UserIcon className="mr-2 size-4" />
-            Profile
-          </DropdownMenuItem>
-        </Link>
+
+        {user && (
+          <>
+            <Link href={`/user/account-info`} legacyBehavior>
+              <DropdownMenuItem>
+                <UserIcon className="mr-2 size-4" />
+                Profile
+              </DropdownMenuItem>
+            </Link>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem onClick={() => logout()}>
+              <LogOutIcon className="mr-2 size-4" />
+              Logout
+            </DropdownMenuItem>
+          </>
+        )}
 
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
@@ -72,13 +87,6 @@ export default function UserButton({ className }: UserButtonProps) {
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>
-
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuItem onClick={() => logout()}>
-          <LogOutIcon className="mr-2 size-4" />
-          Logout
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

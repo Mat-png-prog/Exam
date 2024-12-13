@@ -32,11 +32,8 @@ export default function SignUpForm() {
           email: "",
           password: "",
           firstName: "",     
-          lastName: "",         
-          vatNumber: "",     
+          lastName: "",           
           phoneNumber: 0,   
-          streetAddress: "", 
-          addressLine2: "", 
           suburb: "",        
           townCity: "",      
           postcode: "",      
@@ -121,62 +118,24 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name="vatNumber"
+          name="phoneNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Vat Number</FormLabel>
+              <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder="Vat Number" {...field} />
+                <Input
+                  type="number"
+                  placeholder="Phone Number"
+                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        />
-        <FormField
-  control={form.control}
-  name="phoneNumber"
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>Phone Number</FormLabel>
-      <FormControl>
-        <Input
-          type="number"
-          placeholder="Phone Number"
-           onChange={(e) => field.onChange(parseInt(e.target.value))}
-        />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
-        <FormField
-          control={form.control}
-          name="streetAddress"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Street Address</FormLabel>
-              <FormControl>
-                <Input placeholder="Street Address" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="addressLine2"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Address Line 2</FormLabel>
-              <FormControl>
-                <Input placeholder="Address Line 2" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          />
 
         <FormField
           control={form.control}

@@ -1,30 +1,39 @@
-//src/app/(main)/SessionProvider.tsx
+import React from 'react';
+import { validateRequest } from '@/app/auth';
+import { User, Session } from 'lucia';
+import { cookies } from 'next/headers';
 
-"use client";
-
-import { Session, User } from "lucia";
-import React, { createContext, useContext } from "react";
-
-interface SessionContext {
-  user: User;
-  session: Session;
+interface SessionContextType {
+  user: User | null;
+  session: Session | null;
+  userCount: number;
 }
 
-const SessionContext = createContext<SessionContext | null>(null);
+const fetchSessionData = async (): Promise<SessionContextType> => {
+  const result = await validateRequest();
 
-export default function SessionProvider({
-  children,
-  value,
-}: React.PropsWithChildren<{ value: SessionContext }>) {
+  // Fetch user count
+  const response = await fetch('http://localhost:3000/api/user-count', {
+    headers: {
+      'Authorization': `Bearer ${(await cookies()).get('sessionId')?.value}`,
+    },
+  });
+  const data = await response.json();
+  
+  return {
+    ...result,
+    userCount: data.count,
+  };
+};
+
+const SessionProvider: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
+  const sessionContextValue = await fetchSessionData();
+
   return (
-    <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
+    <React.Fragment>
+      {React.cloneElement(children as React.ReactElement<any>, { sessionContextValue })}
+    </React.Fragment>
   );
-}
+};
 
-export function useSession() {
-  const context = useContext(SessionContext);
-  if (!context) {
-    throw new Error("useSession must be used within a SessionProvider");
-  }
-  return context;
-}
+export default SessionProvider;

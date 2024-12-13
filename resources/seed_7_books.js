@@ -11,10 +11,10 @@ function generateUniqueDescription() {
 }
 
 async function main() {
-  const userId = '11-books'; // Replace with a valid user ID
+  const userId = '3gblh76f4brptpb6'; // Replace with a valid user ID 7 books
 
-  const books = Array.from({ length: 11 }).map((_, i) => ({
-    title: `Book Title ${i + 1}`,
+  const books = Array.from({ length: 7 }).map((_, i) => ({
+    title: `Game Title ${i + 1}`,
     author: `Author ${i + 1}`,
     publishYear: 2000 + (i % 21),
     price: (i + 1) * 10,
@@ -24,7 +24,7 @@ async function main() {
   }));
 
   await prisma.book.createMany({ data: books });
-  console.log('11 books created!');
+  console.log('7 books created!');
 }
 
 main()
@@ -32,3 +32,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+     

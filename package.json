@@ -2,11 +2,10 @@
   "name": "latest-nextjs",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "clean": "rmdir /s /q .next ",
-    "cache-clean": "npm cache clean --force",
+    "cache-clean": "npm cache clean --force &&del .eslintcache",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -15,10 +14,11 @@
     "del-node-mode&lock": "rmdir /s /q node_modules && rmdir /s /q  package-lock.json",
     "legacy": "npm install --legacy-peer-deps",
     "push": "npx prisma db push",
-    "seed-20-books": "node seeds/seed_20_books.cjs",
-    "seed-11-books": "node seeds/seed_11_books.cjs",
-    "seed-7-books": "node seeds/seed_7_books.cjs",
-    "postinstall": "prisma generate"
+    "seed-7-books": "node resources/seed_7_books.js",
+    "has": "node resources/hashPassword.mjs",
+    "postinstall": "prisma generate",
+    "clean-install":
+    "powershell -Command \"Remove-Item -Recurse -Force .next, node_modules, package-lock.json, .eslintcache\""
   },
   "dependencies": {
     "@floating-ui/react-dom": "^2.1.2",

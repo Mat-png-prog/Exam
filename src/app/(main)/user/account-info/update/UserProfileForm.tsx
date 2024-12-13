@@ -28,9 +28,6 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
         lastName: formData.get('lastName') as string,
         email: formData.get('email') as string,
         phoneNumber: Number(formData.get('phoneNumber')),
-        vatNumber: formData.get('vatNumber') as string,
-        streetAddress: formData.get('streetAddress') as string,
-        addressLine2: (formData.get('addressLine2') as string) || null,
         suburb: formData.get('suburb') as string,
         townCity: formData.get('townCity') as string,
         postcode: formData.get('postcode') as string,
@@ -109,46 +106,6 @@ export default function UserProfileForm({ userData, updateUserProfile }: UserPro
                 type="email"
                 defaultValue={userData.email}
                 required 
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phoneNumber">Phone Number</Label>
-              <Input 
-                id="phoneNumber" 
-                name="phoneNumber" 
-                type="tel"
-                defaultValue={userData.phoneNumber}
-                required 
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="vatNumber">VAT Number</Label>
-              <Input 
-                id="vatNumber" 
-                name="vatNumber" 
-                defaultValue={userData.vatNumber}
-                required
-              />
-            </div>
-
-            <div className=" space-y-2 reltive ">
-              <Label htmlFor="streetAddress">Street Address</Label>
-              <Input 
-                id="streetAddress" 
-                name="streetAddress" 
-                defaultValue={userData.streetAddress}
-                required 
-              />
-            </div>
-
-            <div className=" space-y-2">
-              <Label htmlFor="addressLine2">Address Line 2</Label>
-              <Input 
-                id="addressLine2" 
-                name="addressLine2" 
-                defaultValue={userData.addressLine2 || ''}
               />
             </div>
 
